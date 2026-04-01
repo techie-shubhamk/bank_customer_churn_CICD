@@ -1,9 +1,24 @@
+# Use lightweight Python image
 FROM python:3.14
 
+# Prevent Python from buffering stdout/stderr
+ENV PYTHONUNBUFFERED=1
+
+# Set working directory
 WORKDIR /app
 
-COPY . .
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# Copy only requirements first (for caching)
+COPY requirements.txt .
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Install dependencies
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copy full project
+COPY . .
+
+# Expose port
+EXPOSE 8000
+
+# Start FastAPI app
+CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
