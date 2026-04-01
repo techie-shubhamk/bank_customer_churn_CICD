@@ -1,4 +1,7 @@
 alembic==1.18.4
+annotated-doc==0.0.4
+annotated-types==0.7.0
+anyio==4.13.0
 appnope==0.1.4
 asttokens==3.0.1
 attrs==25.4.0
@@ -14,6 +17,7 @@ debugpy==1.8.20
 decorator==5.2.1
 defusedxml==0.7.1
 executing==2.2.1
+fastapi==0.135.3
 fastjsonschema==2.21.2
 filelock==3.25.2
 fonttools==4.61.1
@@ -62,6 +66,8 @@ protobuf==6.33.5
 psutil==7.2.2
 ptyprocess==0.7.0
 pure_eval==0.2.3
+pydantic==2.12.5
+pydantic_core==2.41.5
 Pygments==2.19.2
 pyparsing==3.3.2
 python-dateutil==2.9.0.post0
@@ -79,6 +85,7 @@ sklearn-compat==0.1.5
 soupsieve==2.8.3
 SQLAlchemy==2.0.48
 stack-data==0.6.3
+starlette==1.0.0
 statsmodels==0.14.6
 sympy==1.14.0
 threadpoolctl==3.6.0
@@ -88,6 +95,7 @@ torchinfo==1.8.0
 tornado==6.5.4
 tqdm==4.67.3
 traitlets==5.14.3
+typing-inspection==0.4.2
 typing_extensions==4.15.0
 urllib3==2.6.3
 wcwidth==0.6.0
