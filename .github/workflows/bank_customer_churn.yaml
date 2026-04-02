@@ -21,6 +21,9 @@ jobs:
     - name: Wait for API
       run: sleep 10
 
+    - name: Container status
+      run: docker ps -a
+
     - name: Check logs
       run: docker logs churn-container
 
@@ -30,3 +33,4 @@ jobs:
     - name: Stop container
       if: always()
       run: docker stop churn-container
+
