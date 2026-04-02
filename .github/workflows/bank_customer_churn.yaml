@@ -1,36 +1,76 @@
-name: CI Pipeline
+# name: CI Pipeline
+
+# on:
+#   push:
+#     branches: [ "main" ]
+
+# jobs:
+#   build-run-test:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v3
+
+#     - name: Build Docker image
+#       run: docker build -t churn-pytorch .
+
+#     - name: Run container
+#       run: docker run -d -p 8000:8000 --name churn-container churn-pytorch
+
+#     - name: Wait for API
+#       run: sleep 10
+
+#     - name: Container status
+#       run: docker ps -a
+
+#     - name: Check logs
+#       run: docker logs churn-container
+
+#     - name: Test API
+#       run: curl -f http://localhost:8000/ || exit 1
+
+#     - name: Stop container
+#       if: always()
+#       run: docker stop churn-container
+
+
+
+name: CI-CD Full Pipeline
 
 on:
   push:
     branches: [ "main" ]
 
 jobs:
-  build-run-test:
+  pipeline:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Build Docker image
-      run: docker build -t churn-pytorch .
+    - name: Login Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Run container
-      run: docker run -d -p 8000:8000 --name churn-container churn-pytorch
+    - name: Build Image
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/churn-pytorch .
 
-    - name: Wait for API
+    - name: Run Container
+      run: docker run -d -p 8000:8000 --name churn-container ${{ secrets.DOCKER_USERNAME }}/churn-pytorch
+
+    - name: Wait
       run: sleep 10
-
-    - name: Container status
-      run: docker ps -a
-
-    - name: Check logs
-      run: docker logs churn-container
 
     - name: Test API
       run: curl -f http://localhost:8000/ || exit 1
 
-    - name: Stop container
-      if: always()
-      run: docker stop churn-container
+    - name: Push Image
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/churn-pytorch
 
+    - name: Cleanup
+      if: always()
+      run: docker stop churn-container || true
