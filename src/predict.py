@@ -1,7 +1,16 @@
 import sys
 import os
-BASE_DIR = "/Users/shubham/Desktop/ML_REPO/Bank Customer Churn"
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(BASE_DIR)
+
+
+
+# Get the directory where the app is located
+
+# MODEL_PATH = os.path.join(BASE_DIR, "models", "pipeline.pkl")
+
+
 
 import torch
 import torch.nn as nn

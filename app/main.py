@@ -2,8 +2,10 @@
 
 import sys
 import os
-BASE_DIR = "/Users/shubham/Desktop/ML_REPO/Bank Customer Churn"
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(BASE_DIR)
+
 
 
 from fastapi import FastAPI
