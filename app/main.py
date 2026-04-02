@@ -7,7 +7,8 @@ sys.path.append(BASE_DIR)
 
 
 from fastapi import FastAPI
-
+import asyncio
+import uvicorn
 
 from src.predict import predict
 import pandas as pd
@@ -27,3 +28,17 @@ def get_prediction(data: dict):
     result = predict(input_data)
 
     return {"churn_probability": result}
+
+
+
+
+
+
+if __name__ == "__main__":
+    async def start_server():
+        config = uvicorn.Config(app, host="0.0.0.0", port=8000)
+        server = uvicorn.Server(config)
+        await server.serve()
+
+    asyncio.run(start_server())
+
